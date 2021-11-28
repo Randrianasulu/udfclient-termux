@@ -1330,7 +1330,7 @@ void udf_dump_alive_sets(void) {
 void udf_dump_file_entry_node(struct udf_node *udf_node, char *prefix) {
 	struct long_ad   udf_icbptr;
 	struct uio       dir_uio;
-	struct iovec     dir_iovec;
+	struct myiovec     dir_iovec;
 	struct dirent   *dirent;
 	struct fileid_desc *fid;
 	struct udf_node *entry_node;

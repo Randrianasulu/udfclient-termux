@@ -3453,7 +3453,7 @@ int udf_check_for_vat(struct udf_log_vol *udf_log_vol, struct udf_part_mapping *
 	struct long_ad		 udf_icbptr;
 	struct regid 		*regid;
 	struct uio		 vat_uio;
-	struct iovec		 vat_iovec;
+	struct myiovec		 vat_iovec;
 	struct icb_tag		*icbtag;
 	struct timestamp	*mtime;
 	uint64_t		 vat_length, vat_entries;
@@ -5429,7 +5429,7 @@ void udf_resync_fid_stream(uint8_t *buffer, uint32_t *pfid_pos, uint32_t max_fid
 /* (*fid) has to be allocated a logical block in size, (*dirent) struct dirent length */
 int udf_read_fid_stream(struct udf_node *dir_node, uint64_t *offset, struct fileid_desc *fid, struct dirent *dirent) {
 	struct uio     dir_uio;
-	struct iovec   dir_iovec;
+	struct myiovec   dir_iovec;
 	char          *fid_name;
 	uint32_t       entry_length, lb_size;
 	int            enough, error;
@@ -5792,7 +5792,7 @@ static int udf_count_direntries(struct udf_node *dir_node, int count_dotdot, uin
 
 static int udf_writeout_fid_info(struct udf_node *dir_node, struct fileid_desc *fid, uint64_t offset, uint16_t fid_len) {
 	struct uio     uio;
-	struct iovec   iovec;
+	struct myiovec   iovec;
 	int flags;
 
 	bzero(&uio, sizeof(struct uio));

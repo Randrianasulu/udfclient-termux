@@ -446,9 +446,9 @@ void newfs_udf(struct udf_discinfo *disc, uint16_t dscr_ver, char *volset_name, 
 #ifndef NO_STAT_BIRTHTIME
 			udf_set_timespec_now(&root_node->stat.st_birthtimespec);
 #endif
-			udf_set_timespec_now(&root_node->stat.st_atimespec);
-			udf_set_timespec_now(&root_node->stat.st_ctimespec);
-			udf_set_timespec_now(&root_node->stat.st_mtimespec);
+			udf_set_timespec_now(&root_node->stat.st_atim);
+			udf_set_timespec_now(&root_node->stat.st_ctim);
+			udf_set_timespec_now(&root_node->stat.st_mtim);
 
 			dscr_entry = TAILQ_FIRST(&root_node->dscr_allocs);
 			fileset->rootdir_icb.loc.lb_num   = udf_rw32(dscr_entry->lb_num);

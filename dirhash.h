@@ -39,6 +39,8 @@
 #define	DIRHASH_HASHSIZE	(1 << DIRHASH_HASHBITS)
 #define	DIRHASH_HASHMASK	(DIRHASH_HASHSIZE - 1)
 
+
+
 #ifdef NO_DIRENT_NAMLEN
 #	define DIRENT_NAMLEN(d) strlen((d)->d_name)
 #else

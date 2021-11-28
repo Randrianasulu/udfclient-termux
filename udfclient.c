@@ -43,6 +43,7 @@
 #include "udf.h"
 #include "udf_bswap.h"
 
+
 /* switches */
 
 /* #define DEBUG(a) (a) */
@@ -325,7 +326,7 @@ void udfclient_ls(int args, char *arg1) {
 	struct udf_node *udf_node, *entry_node;
 	uint8_t       *buffer;
 	struct uio     dir_uio;
-	struct iovec   dir_uiovec;
+	struct myiovec   dir_uiovec;
 	struct dirent *dirent;
 	struct stat    stat;
 	uint32_t       pos;
@@ -569,7 +570,7 @@ uint64_t getmtime(void) {
 
 int udfclient_get_file(struct udf_node *udf_node, char *fullsrcname, char *fulldstname) {
 	struct uio	 file_uio;
-	struct iovec	 file_iov;
+	struct myiovec	 file_iov;
 	struct stat	 stat;
 	struct timeval	 times[2];
 	uint64_t	 file_length;
@@ -603,8 +604,8 @@ int udfclient_get_file(struct udf_node *udf_node, char *fullsrcname, char *fulld
 			if (notok && (udf_verbose > UDF_VERBLEV_ACTIONS))
 				fprintf(stderr, "failed to set owner of directory, ignoring\n");
 
-			TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atimespec);	/* access time		*/
-			TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtimespec);	/* modification time	*/
+			TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atim);	/* access time		*/
+			TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtim);	/* modification time	*/
 			notok = utimes(fulldstname, times);
 			if (notok)
 				fprintf(stderr, "failed to set times on directory, ignoring\n");
@@ -690,8 +691,8 @@ int udfclient_get_file(struct udf_node *udf_node, char *fullsrcname, char *fulld
 		if (notok && (udf_verbose > UDF_VERBLEV_ACTIONS))
 			fprintf(stderr, "failed to set owner of file, ignoring\n");
 
-		TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atimespec);	/* access time		*/
-		TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtimespec);	/* modification time	*/
+		TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atim);	/* access time		*/
+		TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtim);	/* modification time	*/
 		notok = futimes(fileh, times);
 		if (notok)
 			fprintf(stderr, "failed to set times on directory, ignoring\n");
@@ -708,7 +709,7 @@ int udfclient_get_file(struct udf_node *udf_node, char *fullsrcname, char *fulld
 #define GET_SUBTREE_DIR_BUFFER_SIZE (16*1024)
 void udfclient_get_subtree(struct udf_node *udf_node, char *srcprefix, char *dstprefix, int recurse, uint64_t *total_size) {
 	struct uio          dir_uio;
-	struct iovec        dir_iovec;
+	struct myiovec        dir_iovec;
 	uint8_t            *buffer;
 	uint32_t            pos;
 	char                fullsrcpath[1024], fulldstpath[1024];	/* XXX arbitrary length XXX */
@@ -900,7 +901,7 @@ void udfclient_mget(int args, char *argv[]) {
 
 int udfclient_put_file(struct udf_node *udf_node, char *fullsrcname, char *fulldstname) {
 	struct uio	 file_uio;
-	struct iovec	 file_iov;
+	struct myiovec	 file_iov;
 	uint64_t	 file_length;
 	uint64_t 	 start, now, then, eta;
 	uint64_t	 cur_speed, avg_speed, data_transfered;
@@ -1221,7 +1222,7 @@ void udfclient_sync(void) {
 #define RM_SUBTREE_DIR_BUFFER_SIZE (32*1024)
 int udfclient_rm_subtree(struct udf_node *parent_node, struct udf_node *dir_node, char *name, char *full_parent_name) {
 	struct uio          dir_uio;
-	struct iovec        dir_iovec;
+	struct myiovec        dir_iovec;
 	uint8_t            *buffer;
 	uint32_t            pos;
 	char               *fullpath;

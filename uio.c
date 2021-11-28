@@ -36,7 +36,7 @@
 
 /* modelled after NetBSD's uiomove */
 int uiomove(void *buf, size_t amount, struct uio *uio) {
-	struct	iovec *iov;
+	struct	myiovec *iov;
 	char	*cp = buf;
 	size_t	cnt;
 
