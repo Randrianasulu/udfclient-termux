@@ -58,4 +58,4 @@ Current FS working directory /data/data/com.termux/files/home/udfclient/UDFclien
 UDF> cd 619bfd4c95bc4357LinuxUDF:1:1:LinuxUDF
 
 
-compile with '. /configure', 'touch - .o', 'make' with gnu make. 
+compile with '. /configure', 'touch .o', 'make' with gnu make. 
