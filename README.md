@@ -3,6 +3,8 @@ very minor hack making udfclient compile on termux
 
 you must cd into (quite-longly-named) special root directory after getting UDF prompt:
 
+
+
 $ ./udfclient -W disk
 --------------------------------
 WARNING: writing enabled, use on own risc
@@ -54,3 +56,6 @@ drwxrwxrwx     -1     -1         176  619bfd4c95bc4357LinuxUDF:1:1:LinuxUDF
 UDF working directory is     /
 Current FS working directory /data/data/com.termux/files/home/udfclient/UDFclient.0.8.11
 UDF> cd 619bfd4c95bc4357LinuxUDF:1:1:LinuxUDF
+
+
+compile with '. /configure', 'touch - .o', 'make' with gnu make. 
