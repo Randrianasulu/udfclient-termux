@@ -603,9 +603,15 @@ int udfclient_get_file(struct udf_node *udf_node, char *fullsrcname, char *fulld
 			notok = chown(fulldstname, stat.st_uid, stat.st_gid);
 			if (notok && (udf_verbose > UDF_VERBLEV_ACTIONS))
 				fprintf(stderr, "failed to set owner of directory, ignoring\n");
-
+#ifdef HAVE_STRUCT_STAT_ST_ATIM
 			TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atim);	/* access time		*/
 			TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtim);	/* modification time	*/
+#endif
+#ifdef HAVE_STRUCT_STAT_ST_ATIMESPEC
+			TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atimespec);	/* access time		*/
+			TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtimespec);	/* modification time	*/
+#endif
+
 			notok = utimes(fulldstname, times);
 			if (notok)
 				fprintf(stderr, "failed to set times on directory, ignoring\n");
@@ -690,9 +696,14 @@ int udfclient_get_file(struct udf_node *udf_node, char *fullsrcname, char *fulld
 		notok = fchown(fileh, stat.st_uid, stat.st_gid);
 		if (notok && (udf_verbose > UDF_VERBLEV_ACTIONS))
 			fprintf(stderr, "failed to set owner of file, ignoring\n");
-
+#ifdef HAVE_STRUCT_STAT_ST_ATIM
 		TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atim);	/* access time		*/
 		TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtim);	/* modification time	*/
+#endif
+#ifdef HAVE_STRUCT_STAT_ST_ATIMESPEC
+		TIMESPEC_TO_TIMEVAL(&times[0], &stat.st_atimespec);	/* access time		*/
+		TIMESPEC_TO_TIMEVAL(&times[1], &stat.st_mtimespec);	/* modification time	*/
+#endif
 		notok = futimes(fileh, times);
 		if (notok)
 			fprintf(stderr, "failed to set times on directory, ignoring\n");

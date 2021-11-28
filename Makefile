@@ -53,7 +53,10 @@ USCSILIB=	uscsi_sense.o uscsi_subr.o
 
 CFLAGS+= -DNEEDS_ISPRINT $(CPPFLAGS)
 
-all: $(APPS) $(SCSI_APPS)
+all: touch $(APPS) $(SCSI_APPS)
+
+touch:
+	touch .o
 
 install: $(APPS) $(SCSI_APPS)
 	$(INSTALL) -d $(DESTDIR)/$(bindir)

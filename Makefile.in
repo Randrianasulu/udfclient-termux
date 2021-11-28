@@ -53,7 +53,10 @@ USCSILIB=	uscsi_sense.o uscsi_subr.o
 
 CFLAGS+= -DNEEDS_ISPRINT $(CPPFLAGS)
 
-all: @BUILD_APPS@
+all: touch @BUILD_APPS@
+
+touch:
+	touch .o
 
 install: @BUILD_APPS@
 	$(INSTALL) -d $(DESTDIR)/$(bindir)
